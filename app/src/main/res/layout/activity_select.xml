@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="1">
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Biking"
+		android:id="@+id/btn_biking"
+		android:layout_gravity="center_horizontal"
+		android:onClick="selectBiking"/>
+
+	<Space
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_weight="0.06"/>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Walking/Running"
+		android:id="@+id/btn_walking"
+		android:layout_gravity="center_horizontal"
+		android:onClick="selectWalking"/>
+
+	<Space
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_weight="0.06"
+		android:id="@+id/space"/>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Jumping"
+		android:id="@+id/btn_jumping"
+		android:layout_gravity="center_horizontal"
+		android:onClick="selectJumping"/>
+
+	<Space
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_weight="0.06"
+		android:id="@+id/space2"/>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Squats"
+		android:id="@+id/btn_squats"
+		android:layout_gravity="center_horizontal"
+		android:onClick="selectSquats"/>
+</LinearLayout>

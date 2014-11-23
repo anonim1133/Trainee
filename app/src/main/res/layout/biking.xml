@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow3">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Czas"
+			android:id="@+id/label_time"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_time"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="godz"
+			android:id="@+id/label_time_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow4">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Aktywność"
+			android:id="@+id/label_time_active"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_time_active"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="godz"
+			android:id="@+id/label_time_active_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Prędkość"
+			android:id="@+id/label_speed"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_speed"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km/h"
+			android:id="@+id/label_speed_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow2">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Średnia"
+			android:id="@+id/label_avg_speed"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_avg_speed"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km/h"
+			android:id="@+id/label_avg_speed_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow5">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Dystans"
+			android:id="@+id/textView2"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/textView3"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km"
+			android:id="@+id/textView4"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Cel"
+			android:id="@+id/label_target"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_target"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km"
+			android:id="@+id/label_target_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+</TableLayout>
