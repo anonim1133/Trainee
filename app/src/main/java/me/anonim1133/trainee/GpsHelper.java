@@ -42,7 +42,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private AverageSpeed avg;
 
 	private Location last_location;
-	private float distance = 0;
+	private float total_distance = 0;
 
 	private boolean updates_requested = false;
 
@@ -78,26 +78,30 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		if(biking != null)
 			biking.setSpeed(String.valueOf(speed));
 
-		if(walking != null)
-			walking.setSpeed(String.valueOf(speed));
+		if(walking != null) {
+			if (speed == 0f)
+				walking.setSpeed("0:00");
+			else
+				walking.setSpeed(String.format("%.2f", 60 / speed).replace(",", ":"));
+		}
 
 		setAverageSpeed(speed);
 	}
 
 	public void setDistance(float distance){
 		if(biking != null)
-			biking.setDistance(String.valueOf(distance));
+			biking.setDistance(String.format("%.2f", distance));
 
 		if(walking != null)
-			walking.setDistance(String.valueOf(distance));
+			walking.setDistance(String.format("%.2f", distance));
 	}
 
 	public void setAverageSpeed(float speed){
 		if(biking != null)
-			biking.setSpeedAVG(String.valueOf(avg.add(speed)));
+			biking.setSpeedAVG(String.format("%.2f", speed));
 
 		if(walking != null)
-			walking.setSpeedAVG(String.valueOf(avg.add(speed)));
+			walking.setSpeedAVG(String.format("%.2f", speed).replace(",", ":"));
 	}
 
 	public void requestUpdates(){
@@ -121,8 +125,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		//Setting distance
 		if(last_location != null){
-			distance += last_location.distanceTo(location);
-			setDistance(distance/1000);
+			total_distance += last_location.distanceTo(location);
+			setDistance(total_distance / 1000);
 		}
 
 		last_location = location;

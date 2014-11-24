@@ -107,7 +107,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:text="Prędkość"
+			android:text="Tempo"
 			android:id="@+id/label_speed"
 			android:layout_column="2"/>
 
@@ -128,7 +128,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:text="km/h"
+			android:text="min/km"
 			android:id="@+id/label_speed_unit"
 			android:layout_column="6"/>
 	</TableRow>
@@ -147,7 +147,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:text="Średnia"
+			android:text="Średnie"
 			android:id="@+id/label_avg_speed"
 			android:layout_column="2"/>
 
@@ -168,7 +168,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:text="km/h"
+			android:text="min/km"
 			android:id="@+id/label_avg_speed_unit"
 			android:layout_column="6"/>
 	</TableRow>
