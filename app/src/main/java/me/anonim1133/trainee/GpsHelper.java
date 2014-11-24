@@ -63,15 +63,11 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	public GpsHelper(Context context, Biking biking) {
 		this.c = context;
 		this.biking = biking;
-
-		requestUpdates();
 	}
 
 	public GpsHelper(Context context, Walking walking) {
 		this.c = context;
 		this.walking = walking;
-
-		requestUpdates();
 	}
 
 	public void setSpeed(float speed){

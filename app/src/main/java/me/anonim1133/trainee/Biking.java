@@ -22,9 +22,23 @@ public class Biking extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.biking, container, false);
+
+		rootView.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view) {
+				onBtnStart();
+			}
+		});
+		rootView.findViewById(R.id.btn_stop).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view) {
+				onBtnStop();
+			}
+		});
 
 		return rootView;
 	}
@@ -33,6 +47,14 @@ public class Biking extends Fragment {
 	public void onStart(){
 		super.onStart();
 
+	}
+
+	public void onBtnStart(){
+		gps.requestUpdates();
+	}
+
+	public void onBtnStop(){
+		gps.stopPeriodicUpdates();
 	}
 
 	public void setTime(String time){

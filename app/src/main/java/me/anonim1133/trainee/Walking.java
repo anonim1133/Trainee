@@ -3,12 +3,13 @@ package me.anonim1133.trainee;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class Walking extends Fragment {
+public class Walking extends Fragment{
 	View rootView;
 	GpsHelper gps;
 
@@ -20,9 +21,23 @@ public class Walking extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		this.rootView = inflater.inflate(R.layout.walking, container, false);
+
+		rootView.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view) {
+				onBtnStart();
+			}
+		});
+		rootView.findViewById(R.id.btn_stop).setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view) {
+				onBtnStop();
+			}
+		});
 
 		return rootView;
 	}
@@ -31,6 +46,14 @@ public class Walking extends Fragment {
 	public void onStart(){
 		super.onStart();
 
+	}
+
+	public void onBtnStart(){
+		gps.requestUpdates();
+	}
+
+	public void onBtnStop(){
+		gps.stopPeriodicUpdates();
 	}
 
 	public void setTime(String time){
