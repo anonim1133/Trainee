@@ -3,6 +3,7 @@ package me.anonim1133.trainee;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,12 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 
 public class Walking extends Fragment{
+
 	View rootView;
 	GpsHelper gps;
+
+	boolean active = false;
+	int active_time = 0;
 
 	@Override
 	public void onAttach(Activity activity){
@@ -40,53 +45,74 @@ public class Walking extends Fragment{
 			}
 		});
 
+
+		Chronometer chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
+		chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+			@Override
+			public void onChronometerTick(Chronometer chronometer) {
+				if(active){
+					if(active_time < (SystemClock.elapsedRealtime() - chronometer.getBase()))
+						active_time++;
+
+					short hours = (short) (active_time / 3600);
+					short minutes = (short) ((active_time % 3600) / 60);
+					short seconds = (short) (active_time % 60);
+
+					setTimeActive(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+				}
+			}
+		});
+
 		return rootView;
 	}
 
-	@Override
-	public void onStart(){
-		super.onStart();
+			@Override
+			public void onStart() {
+				super.onStart();
 
-	}
+			}
 
-	public void onBtnStart(){
-		gps.requestUpdates();
+			public void onBtnStart() {
+				gps.requestUpdates();
 
-		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
-		chrono.start();
-	}
+				Chronometer chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
+				chrono.start();
+			}
 
-	public void onBtnStop(){
-		if(gps != null)
-			gps.stopPeriodicUpdates();
+			public void onBtnStop() {
+				if (gps != null)
+					gps.stopPeriodicUpdates();
 
-		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
-		chrono.stop();
-	}
+				Chronometer chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
+				chrono.stop();
+			}
 
-	public void setTime(String time){
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_time);
-		tv.setText(time);
-	}
+			public void setActive(boolean active) {
+				this.active = active;
+			}
 
-	public void setTimeActive(String time_active){
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_time_active);
-		tv.setText(time_active);
-	}
-	public void setSpeed(String speed){
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_speed);
-		tv.setText(speed);
-	}
-	public void setSpeedAVG(String speed_avg){
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_avg_speed);
-		tv.setText(speed_avg);
-	}
-	public void setDistance(String distance){
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_distance);
-		tv.setText(distance);
-	}
-	public void setGoal(String goal){
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_goal);
-		tv.setText(goal);
-	}
-}
+			public void setTimeActive(String time_active) {
+				TextView tv = (TextView) rootView.findViewById(R.id.txt_time_active);
+				tv.setText(time_active);
+			}
+
+			public void setSpeed(String speed) {
+				TextView tv = (TextView) rootView.findViewById(R.id.txt_speed);
+				tv.setText(speed);
+			}
+
+			public void setSpeedAVG(String speed_avg) {
+				TextView tv = (TextView) rootView.findViewById(R.id.txt_avg_speed);
+				tv.setText(speed_avg);
+			}
+
+			public void setDistance(String distance) {
+				TextView tv = (TextView) rootView.findViewById(R.id.txt_distance);
+				tv.setText(distance);
+			}
+
+			public void setGoal(String goal) {
+				TextView tv = (TextView) rootView.findViewById(R.id.txt_goal);
+				tv.setText(goal);
+			}
+		}

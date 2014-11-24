@@ -70,6 +70,14 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		this.walking = walking;
 	}
 
+	public void setActive(boolean active){
+		if(biking != null)
+			biking.setActive(active);
+
+		if(walking != null)
+			walking.setActive(active);
+	}
+
 	public void setSpeed(float speed){
 		if(biking != null)
 			biking.setSpeed(String.valueOf(speed));
@@ -123,6 +131,12 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		if(last_location != null){
 			total_distance += last_location.distanceTo(location);
 			setDistance(total_distance / 1000);
+
+			//Setting active
+			if(!last_location.hasSpeed() && !location.hasSpeed())
+				setActive(false);
+			else
+				setActive(true);
 		}
 
 		last_location = location;

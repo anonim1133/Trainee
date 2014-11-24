@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,9 @@ public class Biking extends Fragment {
 
 	View rootView;
 	GpsHelper gps;
+
+	boolean active = false;
+	int active_time = 0;
 
 	@Override
 	public void onAttach(Activity activity){
@@ -41,6 +45,23 @@ public class Biking extends Fragment {
 			}
 		});
 
+		Chronometer chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
+		chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
+			@Override
+			public void onChronometerTick(Chronometer chronometer) {
+				if(active){
+					if(active_time < (SystemClock.elapsedRealtime() - chronometer.getBase()))
+						active_time++;
+
+					short hours = (short) (active_time / 3600);
+					short minutes = (short) ((active_time % 3600) / 60);
+					short seconds = (short) (active_time % 60);
+
+					setTimeActive(String.format("%02d:%02d:%02d", hours, minutes, seconds) + "dd");
+				}
+			}
+		});
+
 		return rootView;
 	}
 
@@ -65,9 +86,8 @@ public class Biking extends Fragment {
 		chrono.stop();
 	}
 
-	public void setTime(String time){
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_time);
-		tv.setText(time);
+	public void setActive(boolean active){
+		this.active = active;
 	}
 
 	public void setTimeActive(String time_active){
