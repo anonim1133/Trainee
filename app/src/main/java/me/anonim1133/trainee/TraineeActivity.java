@@ -27,6 +27,8 @@ public class TraineeActivity extends Activity {
         }
     }
 
+	/* Selecting proper fragments for activities */
+
 	public void selectActivity(View view){
 		getFragmentManager().beginTransaction()
 				.replace(R.id.container, new SelectActivity())

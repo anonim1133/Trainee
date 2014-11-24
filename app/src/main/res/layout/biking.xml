@@ -188,7 +188,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="Dystans"
-			android:id="@+id/textView2"
+			android:id="@+id/label_distance"
 			android:layout_column="2"/>
 
 		<Space
@@ -201,7 +201,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="0"
-			android:id="@+id/textView3"
+			android:id="@+id/txt_distance"
 			android:layout_column="5"/>
 
 		<TextView
@@ -209,7 +209,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km"
-			android:id="@+id/textView4"
+			android:id="@+id/txt_distance_unit"
 			android:layout_column="6"/>
 	</TableRow>
 
@@ -228,7 +228,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="Cel"
-			android:id="@+id/label_target"
+			android:id="@+id/label_goal"
 			android:layout_column="2"/>
 
 		<Space
@@ -241,7 +241,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="0"
-			android:id="@+id/txt_target"
+			android:id="@+id/txt_goal"
 			android:layout_column="5"/>
 
 		<TextView
@@ -249,7 +249,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km"
-			android:id="@+id/label_target_unit"
+			android:id="@+id/label_goal_unit"
 			android:layout_column="6"/>
 	</TableRow>
 
