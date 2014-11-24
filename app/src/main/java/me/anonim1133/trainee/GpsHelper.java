@@ -94,10 +94,10 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	public void setAverageSpeed(float speed){
 		if(biking != null)
-			biking.setSpeedAVG(String.valueOf(speed));
+			biking.setSpeedAVG(String.valueOf(avg.add(speed)));
 
 		if(walking != null)
-			walking.setSpeedAVG(String.valueOf(speed));
+			walking.setSpeedAVG(String.valueOf(avg.add(speed)));
 	}
 
 	public void requestUpdates(){
