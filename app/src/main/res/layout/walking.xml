@@ -37,21 +37,12 @@
 			android:layout_height="20px"
 			android:layout_column="3"/>
 
-		<TextView
+		<Chronometer
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:text="0"
-			android:id="@+id/txt_time"
+			android:id="@+id/chronometer"
 			android:layout_column="5"/>
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:text="godz"
-			android:id="@+id/label_time_unit"
-			android:layout_column="6"/>
 	</TableRow>
 
 	<TableRow

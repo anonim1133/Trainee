@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
 public class Biking extends Fragment {
@@ -51,10 +52,17 @@ public class Biking extends Fragment {
 
 	public void onBtnStart(){
 		gps.requestUpdates();
+
+		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
+		chrono.start();
 	}
 
 	public void onBtnStop(){
-		gps.stopPeriodicUpdates();
+		if(gps != null)
+			gps.stopPeriodicUpdates();
+
+		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
+		chrono.stop();
 	}
 
 	public void setTime(String time){

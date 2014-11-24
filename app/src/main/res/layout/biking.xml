@@ -37,21 +37,18 @@
 			android:layout_height="20px"
 			android:layout_column="3"/>
 
-		<TextView
+		<Chronometer
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceMedium"
-			android:text="0"
-			android:id="@+id/txt_time"
-			android:layout_column="5"/>
-
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:text="godz"
-			android:id="@+id/label_time_unit"
+			android:id="@+id/chronometer"
 			android:layout_column="6"/>
+
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
 	</TableRow>
 
 	<TableRow
@@ -91,7 +88,7 @@
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="godz"
 			android:id="@+id/label_time_active_unit"
-			android:layout_column="6"/>
+			android:layout_column="7"/>
 	</TableRow>
 
 	<TableRow
@@ -130,7 +127,7 @@
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km/h"
 			android:id="@+id/label_speed_unit"
-			android:layout_column="6"/>
+			android:layout_column="7"/>
 	</TableRow>
 
 	<TableRow
@@ -170,7 +167,7 @@
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km/h"
 			android:id="@+id/label_avg_speed_unit"
-			android:layout_column="6"/>
+			android:layout_column="7"/>
 	</TableRow>
 
 	<TableRow
@@ -210,7 +207,7 @@
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km"
 			android:id="@+id/txt_distance_unit"
-			android:layout_column="6"/>
+			android:layout_column="7"/>
 	</TableRow>
 
 	<TableRow
@@ -250,7 +247,7 @@
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km"
 			android:id="@+id/label_goal_unit"
-			android:layout_column="6"/>
+			android:layout_column="7"/>
 	</TableRow>
 
 	<TableRow
@@ -273,7 +270,7 @@
 			android:text="Start"
 			android:id="@+id/btn_start"
 			android:layout_column="2"
-			android:layout_span="5"/>
+			android:layout_span="6"/>
 	</TableRow>
 
 	<TableRow
@@ -296,6 +293,22 @@
 			android:text="Stop"
 			android:id="@+id/btn_stop"
 			android:layout_column="2"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
 	</TableRow>
 
 </TableLayout>
