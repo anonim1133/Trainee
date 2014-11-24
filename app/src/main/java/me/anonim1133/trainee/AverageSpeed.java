@@ -15,13 +15,12 @@ public class AverageSpeed {
 
 		this.sum += value;
 
-		if(this.count == this.limit){
-			float ret = (sum/count);
+		float ret = (sum/count);
 
+		if(this.count == this.limit)
 			reset(ret);
 
-			return ret;
-		}else return 0;
+		return ret;
 	}
 
 	private void reset(float average){
