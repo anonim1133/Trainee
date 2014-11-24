@@ -20,7 +20,10 @@ import com.google.android.gms.location.LocationRequest;
 public class GpsHelper extends Activity implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 
 	private static final String APPTAG = "GpsHelper";
-	
+
+	//Number of samples for counting average
+	private static final short AVERAGE_SAMPLE_COUNT = 100;
+
 	public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	public static final int MILLISECONDS_PER_SECOND = 1000;
 	public static final int UPDATE_INTERVAL_IN_SECONDS = 5;
@@ -34,9 +37,13 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private LocationRequest locationRequest;
 
 	private Context c;
+	private Biking biking;
+	private Walking walking;
+	private AverageSpeed avg;
 
-	private Location loc;
-	private boolean got_location = false;
+	private Location last_location;
+	private float distance = 0;
+
 	private boolean updates_requested = false;
 
 
@@ -53,25 +60,72 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		requestUpdates();
 	}
 
-	public void requestUpdates(){
-		locationClient.connect();
-		updates_requested = true;
+	public GpsHelper(Context context, Biking biking) {
+		this.c = context;
+		this.biking = biking;
+
+		requestUpdates();
 	}
 
-	public Location getLocation(){
-		if (got_location == false){
+	public GpsHelper(Context context, Walking walking) {
+		this.c = context;
+		this.walking = walking;
 
-			Location tmp = null;
-			return tmp;
+		requestUpdates();
+	}
 
-		}else return loc;
+	public void setSpeed(float speed){
+		if(biking != null)
+			biking.setSpeed(String.valueOf(speed));
+
+		if(walking != null)
+			walking.setSpeed(String.valueOf(speed));
+
+		setAverageSpeed(speed);
+	}
+
+	public void setDistance(float distance){
+		if(biking != null)
+			biking.setDistance(String.valueOf(distance));
+
+		if(walking != null)
+			walking.setDistance(String.valueOf(distance));
+	}
+
+	public void setAverageSpeed(float speed){
+		if(biking != null)
+			biking.setSpeedAVG(String.valueOf(speed));
+
+		if(walking != null)
+			walking.setSpeedAVG(String.valueOf(speed));
+	}
+
+	public void requestUpdates(){
+		locationRequest = LocationRequest.create();
+		locationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		locationRequest.setFastestInterval(FAST_INTERVAL_CEILING_IN_MILLISECONDS);
+
+		locationClient = new LocationClient(c, this, this);
+
+		locationClient.connect();
+		updates_requested = true;
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
 		Log.d(APPTAG, "onLocationChanged");
-		loc = location;
-		got_location = true;
+
+		//Setting speed
+		setSpeed(location.getSpeed()*3.6f);
+
+		//Setting distance
+		if(last_location != null){
+			distance += last_location.distanceTo(location);
+			setDistance(distance/1000);
+		}
+
+		last_location = location;
 	}
 
 	@Override
@@ -88,9 +142,17 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		// Display the connection status
 	}
 
+	@Override
+	public void onStop(){
+		Log.d(APPTAG, "onStop");
+		stopPeriodicUpdates();
+	}
+
 	private void startPeriodicUpdates() {
 		Log.d(APPTAG, "startPeriodicUpdates");
 		locationClient.requestLocationUpdates(locationRequest, this);
+
+		avg = new AverageSpeed(AVERAGE_SAMPLE_COUNT);
 	}
 
 	public void stopPeriodicUpdates() {

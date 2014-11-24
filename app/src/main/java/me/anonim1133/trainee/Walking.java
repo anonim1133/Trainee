@@ -1,5 +1,6 @@
 package me.anonim1133.trainee;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,8 +10,13 @@ import android.widget.TextView;
 
 public class Walking extends Fragment {
 	View rootView;
+	GpsHelper gps;
 
-	public Walking() {
+	@Override
+	public void onAttach(Activity activity){
+		super.onAttach(activity);
+
+		gps = new GpsHelper(activity, this);
 	}
 
 	@Override

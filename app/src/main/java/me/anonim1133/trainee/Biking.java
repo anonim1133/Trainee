@@ -1,18 +1,24 @@
 package me.anonim1133.trainee;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 public class Biking extends Fragment {
 
 	View rootView;
+	GpsHelper gps;
 
-	public Biking() {
+	@Override
+	public void onAttach(Activity activity){
+		super.onAttach(activity);
+
+		gps = new GpsHelper(activity, this);
 	}
 
 	@Override
