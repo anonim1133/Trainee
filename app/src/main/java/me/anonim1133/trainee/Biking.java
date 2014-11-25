@@ -14,6 +14,7 @@ public class Biking extends Fragment {
 
 	View rootView;
 	GpsHelper gps;
+	Chronometer chrono;
 
 	boolean active = false;
 	int active_time = 0;
@@ -44,7 +45,7 @@ public class Biking extends Fragment {
 			}
 		});
 
-		Chronometer chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
+		chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
 		chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
 			@Override
 			public void onChronometerTick(Chronometer chronometer) {
@@ -52,11 +53,9 @@ public class Biking extends Fragment {
 					if(active_time < (SystemClock.elapsedRealtime() - chronometer.getBase()))
 						active_time++;
 
-					short hours = (short) (active_time / 3600);
-					short minutes = (short) ((active_time % 3600) / 60);
-					short seconds = (short) (active_time % 60);
 
-					setTimeActive(String.format("%02d:%02d:%02d", hours, minutes, seconds));
+
+					setTimeActive(getTimeActive());
 				}
 			}
 		});
@@ -73,7 +72,6 @@ public class Biking extends Fragment {
 	public void onBtnStart(){
 		gps.requestUpdates();
 
-		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
 		chrono.setBase(SystemClock.elapsedRealtime());
 		chrono.start();
 
@@ -85,11 +83,27 @@ public class Biking extends Fragment {
 		if(gps != null)
 			gps.stopPeriodicUpdates();
 
-		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
 		chrono.stop();
 
 		rootView.findViewById(R.id.btn_start).setVisibility(View.VISIBLE);
 		rootView.findViewById(R.id.btn_stop).setVisibility(View.GONE);
+	}
+
+	public String getTime(){
+		long elapsedMillis = SystemClock.elapsedRealtime() - chrono.getBase();
+		short hours = (short) (elapsedMillis / 3600);
+		short minutes = (short) ((elapsedMillis % 3600) / 60);
+		short seconds = (short) (elapsedMillis % 60);
+
+		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	}
+
+	public String getTimeActive(){
+		short hours = (short) (active_time / 3600);
+		short minutes = (short) ((active_time % 3600) / 60);
+		short seconds = (short) (active_time % 60);
+
+		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
 
 	public void setActive(boolean active){

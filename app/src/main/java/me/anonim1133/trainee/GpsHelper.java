@@ -7,6 +7,7 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Chronometer;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.ErrorDialogFragment;
@@ -15,6 +16,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+
+import java.sql.SQLException;
 
 
 public class GpsHelper extends Activity implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
@@ -35,6 +38,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	private LocationClient locationClient;
 	private LocationRequest locationRequest;
+	private GpxBuilder gpx;
+	private DataBaseHelper db;
 
 	private Context c;
 	private Biking biking;
@@ -169,6 +174,9 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 				setActive(true);
 		}
 
+		//Saving point to gpx
+		gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getLongitude(),	location.getTime());
+
 		last_location = location;
 	}
 
@@ -190,6 +198,21 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	public void onStop(){
 		Log.d(APPTAG, "onStop");
 		stopPeriodicUpdates();
+
+		String filename = gpx.close();
+
+		if(biking != null){
+
+			String time = biking.getTime();
+			String time_active = biking.getTimeActive();
+
+			db.addTraining(filename, "Biking", time, time_active, avg_speed.get(), avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+		}else if(walking != null){
+
+			String time = biking.getTime();
+			String time_active = biking.getTimeActive();
+			db.addTraining(filename, "Walking" ,time, time_active, avg_speed.get(), avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+		}
 	}
 
 	public void requestUpdates(){
@@ -202,6 +225,18 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		locationClient.connect();
 		updates_requested = true;
+
+		if(biking != null)
+			gpx = new GpxBuilder(c, "Biking", "Unknown");
+		else if(walking != null)
+			gpx = new GpxBuilder(c, "Walking", "Unknown");
+		else gpx = new GpxBuilder(c, "Unknown", "Unknown");
+
+		try {
+			db = new DataBaseHelper(c);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 

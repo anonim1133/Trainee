@@ -23,6 +23,10 @@ public class AverageSpeed {
 		return ret;
 	}
 
+	public float get(){
+		return sum/count;
+	}
+
 	private void reset(float average){
 		this.count = 1;
 		this.sum = average;
