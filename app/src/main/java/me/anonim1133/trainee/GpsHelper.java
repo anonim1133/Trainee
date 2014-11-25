@@ -149,7 +149,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		setSpeed(location.getSpeed()*3.6f);
 
 		//Setting altitude
-		if(location.hasAltitude()){
+		if(location.hasAltitude() && location.getAltitude() <= 10.0){
 			if(((float) location.getAltitude()) > altitude_max)
 				altitude_max = (float) location.getAltitude();
 
@@ -230,7 +230,6 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			e.printStackTrace();
 		}
 	}
-
 
 	private void startPeriodicUpdates() {
 		Log.d(APPTAG, "startPeriodicUpdates");
