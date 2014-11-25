@@ -106,6 +106,16 @@ public class Walking extends Fragment{
 				tv.setText(speed_avg);
 			}
 
+			public void setTempo(String speed) {
+				TextView tv = (TextView) rootView.findViewById(R.id.txt_tempo);
+				tv.setText(speed);
+			}
+
+			public void setTempoAVG(String speed_avg) {
+				TextView tv = (TextView) rootView.findViewById(R.id.txt_avg_tempo);
+				tv.setText(speed_avg);
+			}
+
 			public void setDistance(String distance) {
 				TextView tv = (TextView) rootView.findViewById(R.id.txt_distance);
 				tv.setText(distance);

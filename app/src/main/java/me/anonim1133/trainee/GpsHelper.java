@@ -39,7 +39,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private Context c;
 	private Biking biking;
 	private Walking walking;
-	private AverageSpeed avg;
+	private AverageSpeed avg_speed;
+	private AverageSpeed avg_tempo;
 
 	private Location last_location;
 	private float total_distance = 0;
@@ -70,17 +71,46 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	public void setSpeed(float speed){
 		if(biking != null)
-			biking.setSpeed(String.valueOf(speed));
+			biking.setSpeed(String.format("%.2f", speed));
 
 		if(walking != null) {
-			if (speed == 0f)
-				walking.setSpeed("0:00");
-			else
-				walking.setSpeed(String.format("%.2f", 60 / speed).replace(",", ":"));
+				walking.setSpeed(String.format("%.2f", speed));
 		}
+
+		tempo(speed);
 
 		if(speed > 0)
 			setAverageSpeed(speed);
+	}
+
+	public void setAverageSpeed(float speed){
+		if(biking != null)
+			biking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
+
+		if(walking != null && speed > 0)
+			walking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
+	}
+
+	public void tempo(float speed){
+		if(speed > 0){
+			float tempo = 60/speed;
+
+			if(biking != null)
+				biking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
+
+			if(walking != null)
+				walking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
+
+			setAverageTempo(tempo);
+		}
+	}
+
+	public void setAverageTempo(float speed){
+		if(biking != null)
+			biking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)));
+
+		if(walking != null && speed > 0)
+			walking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)).replace(",", ":"));
 	}
 
 	public void setDistance(float distance){
@@ -89,14 +119,6 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		if(walking != null)
 			walking.setDistance(String.format("%.2f", distance));
-	}
-
-	public void setAverageSpeed(float speed){
-		if(biking != null)
-			biking.setSpeedAVG(String.format("%.2f", avg.add(speed)));
-
-		if(walking != null && speed > 0)
-			walking.setSpeedAVG(String.format("%.2f", avg.add(60/speed)).replace(",", ":"));
 	}
 
 	public void setAltitude(float min, float diff, float max, float upward, float downward){
@@ -129,8 +151,10 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 				else upward += altitude_difference;
 			}
 
-			if(altitude_max < 10000 & altitude_min > -1000)
-				setAltitude(altitude_min, (altitude_max-altitude_min), altitude_max, upward, downward);
+			if(altitude_max < 10000 & altitude_min > -1000) {
+				float diff = (altitude_max - altitude_min);
+				setAltitude(altitude_min, diff, altitude_max, upward, downward);
+			}
 		}
 
 		//Setting distance
@@ -185,7 +209,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		Log.d(APPTAG, "startPeriodicUpdates");
 		locationClient.requestLocationUpdates(locationRequest, this);
 
-		avg = new AverageSpeed(AVERAGE_SAMPLE_COUNT);
+		avg_speed = new AverageSpeed(AVERAGE_SAMPLE_COUNT);
+		avg_tempo = new AverageSpeed(AVERAGE_SAMPLE_COUNT);
 	}
 
 	public void stopPeriodicUpdates() {

@@ -133,7 +133,7 @@
 	<TableRow
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:id="@+id/tableRow2">
+		android:id="@+id/tableRow12">
 
 		<Space
 			android:layout_width="20px"
@@ -167,6 +167,85 @@
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km/h"
 			android:id="@+id/label_avg_speed_unit"
+			android:layout_column="7"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Tempo"
+			android:id="@+id/label_tempo"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_tempo"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="min/km"
+			android:id="@+id/label_tempo_unit"
+			android:layout_column="7"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow2">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Średnie"
+			android:id="@+id/label_avg_tempo"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_avg_tempo"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="min/km"
+			android:id="@+id/label_avg_tempo_unit"
 			android:layout_column="7"/>
 	</TableRow>
 
@@ -345,7 +424,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="W górę"
-			android:id="@+id/label_upward"
+			android:id="@+id/label_altitude_upward"
 			android:layout_column="2"
 			/>
 
@@ -359,7 +438,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="0"
-			android:id="@+id/txt_upward"
+			android:id="@+id/txt_altitude_upward"
 			android:layout_column="5"/>
 
 		<TextView
@@ -367,7 +446,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="m"
-			android:id="@+id/label_upward_unit"
+			android:id="@+id/label_altitude_upward_unit"
 			android:layout_column="7"/>
 	</TableRow>
 
@@ -386,7 +465,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="W dół"
-			android:id="@+id/label_downward"
+			android:id="@+id/label_altitude_downward"
 			android:layout_column="2"/>
 
 		<Space
@@ -399,7 +478,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="0"
-			android:id="@+id/txt_downward"
+			android:id="@+id/txt_altitude_downward"
 			android:layout_column="5"/>
 
 		<TextView
@@ -407,7 +486,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="m"
-			android:id="@+id/label_downward_unit"
+			android:id="@+id/label_altitude_downward_unit"
 			android:layout_column="7"/>
 	</TableRow>
 
