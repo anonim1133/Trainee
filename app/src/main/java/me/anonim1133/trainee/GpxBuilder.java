@@ -51,10 +51,11 @@ public class GpxBuilder {
 		}
 	}
 
-	public void addPoint(double lat, double lon, double ele, long time){
+	public void addPoint(double lat, double lon, double ele, float speed, long time){
 		String string = "<trkpt lat=\"" + String.valueOf(lat) + "\" lon=\"" + String.valueOf(lon) + "\">\n" +
 				"\t\t<ele>" + String.valueOf(ele) + "</ele>\n" +
 				"\t\t<time>" + String.valueOf(time) + "</time>\n" +
+				"\t\t<speed>" + String.valueOf(speed) + "</speed>\n" +
 				"\t\t</trkpt>\n";
 
 		try {

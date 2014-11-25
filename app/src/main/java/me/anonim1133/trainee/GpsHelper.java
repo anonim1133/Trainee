@@ -7,7 +7,6 @@ import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Chronometer;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.ErrorDialogFragment;
@@ -49,6 +48,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	private Location last_location;
 	private float total_distance = 0;
+	private float speed_max = 0;
+	private float tempo_min = 50.0f;
 	private float altitude_min = 10000;
 	private float altitude_max = -1000;
 	private float upward = 0;
@@ -75,6 +76,9 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	public void setSpeed(float speed){
+		if(speed_max < speed)
+			speed_max = speed;
+
 		if(biking != null)
 			biking.setSpeed(String.format("%.2f", speed));
 
@@ -99,6 +103,9 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	public void tempo(float speed){
 		if(speed > 0){
 			float tempo = 60/speed;
+
+			if(tempo_min > tempo)
+				tempo_min = tempo;
 
 			if(biking != null)
 				biking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
@@ -175,7 +182,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		}
 
 		//Saving point to gpx
-		gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getLongitude(),	location.getTime());
+		gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f,	location.getTime());
 
 		last_location = location;
 	}
@@ -198,21 +205,6 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	public void onStop(){
 		Log.d(APPTAG, "onStop");
 		stopPeriodicUpdates();
-
-		String filename = gpx.close();
-
-		if(biking != null){
-
-			String time = biking.getTime();
-			String time_active = biking.getTimeActive();
-
-			db.addTraining(filename, "Biking", time, time_active, avg_speed.get(), avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
-		}else if(walking != null){
-
-			String time = biking.getTime();
-			String time_active = biking.getTimeActive();
-			db.addTraining(filename, "Walking" ,time, time_active, avg_speed.get(), avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
-		}
 	}
 
 	public void requestUpdates(){
@@ -250,6 +242,23 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	public void stopPeriodicUpdates() {
 		Log.d(APPTAG, "stopPeriodicUpdates");
+
+		String filename = gpx.close();
+
+		if(biking != null){
+
+			String time = biking.getTime();
+			String time_active = biking.getTimeActive();
+
+			db.addTraining(filename, "Biking", time, time_active, speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+		}else if(walking != null){
+
+			String time = biking.getTime();
+			String time_active = biking.getTimeActive();
+			db.addTraining(filename, "Walking" ,time, time_active, speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+		}
+
+
 		locationClient.removeLocationUpdates(this);
 	}
 
