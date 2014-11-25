@@ -75,6 +75,7 @@ public class Biking extends Fragment {
 		gps.requestUpdates();
 
 		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
+		chrono.setBase(SystemClock.elapsedRealtime());
 		chrono.start();
 	}
 
@@ -121,9 +122,9 @@ public class Biking extends Fragment {
 		txt_diff.setText(diff);
 
 		TextView txt_upward= (TextView) rootView.findViewById(R.id.txt_altitude_upward);
-		txt_diff.setText(upward);
+		txt_upward.setText(upward);
 
 		TextView txt_downward= (TextView) rootView.findViewById(R.id.txt_altitude_downward);
-		txt_diff.setText(downward);
+		txt_downward.setText(downward);
 	}
 }

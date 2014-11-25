@@ -93,7 +93,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 				walking.setSpeed(String.format("%.2f", 60 / speed).replace(",", ":"));
 		}
 
-		setAverageSpeed(speed);
+		if(speed > 0)
+			setAverageSpeed(speed);
 	}
 
 	public void setDistance(float distance){
@@ -108,8 +109,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		if(biking != null)
 			biking.setSpeedAVG(String.format("%.2f", avg.add(speed)));
 
-		if(walking != null)
-			walking.setSpeedAVG(String.format("%.2f", avg.add(speed)).replace(",", ":"));
+		if(walking != null && speed > 0)
+			walking.setSpeedAVG(String.format("%.2f", avg.add(60/speed)).replace(",", ":"));
 	}
 
 	public void setAltitude(float min, float diff, float max, float upward, float downward){
@@ -143,7 +144,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			}
 
 			if(altitude_max < 10000 & altitude_min > -1000)
-				setAltitude(altitude_min, altitude_max-altitude_min, altitude_max, upward, downward);
+				setAltitude(altitude_min, (altitude_max-altitude_min), altitude_max, upward, downward);
 		}
 
 		//Setting distance
