@@ -45,6 +45,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private float total_distance = 0;
 	private float altitude_min = 10000;
 	private float altitude_max = -1000;
+	private float upward = 0;
+	private float downward = 0;
 
 	private boolean updates_requested = false;
 
@@ -110,12 +112,12 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			walking.setSpeedAVG(String.format("%.2f", avg.add(speed)).replace(",", ":"));
 	}
 
-	public void setAltitude(float min, float diff, float max){
+	public void setAltitude(float min, float diff, float max, float upward, float downward){
 		if(biking != null)
-			biking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max));
+			biking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
 
 		if(walking != null)
-			walking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max));
+			walking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
 	}
 
 	@Override
@@ -133,8 +135,15 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			if(((float) location.getAltitude()) < altitude_min)
 				altitude_min = (float) location.getAltitude();
 
+			if(last_location != null && location.hasAltitude() && last_location.hasAltitude()){
+				float altitude_difference = (float)(location.getAltitude() - last_location.getAltitude());
+
+				if(altitude_difference < 0) downward += -altitude_difference;
+				else upward += altitude_difference;
+			}
+
 			if(altitude_max < 10000 & altitude_min > -1000)
-				setAltitude(altitude_min, altitude_max-altitude_min, altitude_max);
+				setAltitude(altitude_min, altitude_max-altitude_min, altitude_max, upward, downward);
 		}
 
 		//Setting distance

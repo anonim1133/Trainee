@@ -116,7 +116,7 @@ public class Walking extends Fragment{
 				tv.setText(goal);
 			}
 
-			public void setAltitude(String min, String diff, String max){
+			public void setAltitude(String min, String diff, String max, String upward, String downward){
 				TextView txt_min = (TextView) rootView.findViewById(R.id.txt_altitude_min);
 				txt_min.setText(min);
 
@@ -125,6 +125,12 @@ public class Walking extends Fragment{
 
 				TextView txt_diff= (TextView) rootView.findViewById(R.id.txt_altitude_diff);
 				txt_diff.setText(diff);
+
+				TextView txt_upward= (TextView) rootView.findViewById(R.id.txt_altitude_upward);
+				txt_diff.setText(upward);
+
+				TextView txt_downward= (TextView) rootView.findViewById(R.id.txt_altitude_downward);
+				txt_diff.setText(downward);
 			}
 
 		}

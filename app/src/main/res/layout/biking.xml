@@ -333,6 +333,87 @@
 	<TableRow
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
+		android:id="@+id/tableRow9">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="W górę"
+			android:id="@+id/label_upward"
+			android:layout_column="2"
+			/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_upward"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="m"
+			android:id="@+id/label_upward_unit"
+			android:layout_column="7"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow10">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="W dół"
+			android:id="@+id/label_downward"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_downward"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="m"
+			android:id="@+id/label_downward_unit"
+			android:layout_column="7"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
 		android:id="@+id/tableRow">
 
 		<Space
@@ -413,22 +494,6 @@
 			android:text="Stop"
 			android:id="@+id/btn_stop"
 			android:layout_column="2"/>
-	</TableRow>
-
-	<TableRow
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-	</TableRow>
-
-	<TableRow
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-	</TableRow>
-
-	<TableRow
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-
 	</TableRow>
 
 </TableLayout>
