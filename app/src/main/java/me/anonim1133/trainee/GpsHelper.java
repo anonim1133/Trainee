@@ -50,20 +50,6 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	private boolean updates_requested = false;
 
-
-	public GpsHelper(Context context){
-		this.c = context;
-
-		locationRequest = LocationRequest.create();
-		locationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		locationRequest.setFastestInterval(FAST_INTERVAL_CEILING_IN_MILLISECONDS);
-
-		locationClient = new LocationClient(c, this, this);
-
-		requestUpdates();
-	}
-
 	public GpsHelper(Context context, Biking biking) {
 		this.c = context;
 		this.biking = biking;

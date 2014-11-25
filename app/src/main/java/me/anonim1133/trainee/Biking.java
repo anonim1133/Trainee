@@ -2,7 +2,6 @@ package me.anonim1133.trainee;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.LayoutInflater;
@@ -57,7 +56,7 @@ public class Biking extends Fragment {
 					short minutes = (short) ((active_time % 3600) / 60);
 					short seconds = (short) (active_time % 60);
 
-					setTimeActive(String.format("%02d:%02d:%02d", hours, minutes, seconds) + "dd");
+					setTimeActive(String.format("%02d:%02d:%02d", hours, minutes, seconds));
 				}
 			}
 		});
