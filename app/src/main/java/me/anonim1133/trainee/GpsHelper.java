@@ -43,6 +43,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	private Location last_location;
 	private float total_distance = 0;
+	private float altitude_min = 10000;
+	private float altitude_max = -1000;
 
 	private boolean updates_requested = false;
 
@@ -108,16 +110,12 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			walking.setSpeedAVG(String.format("%.2f", avg.add(speed)).replace(",", ":"));
 	}
 
-	public void requestUpdates(){
-		locationRequest = LocationRequest.create();
-		locationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		locationRequest.setFastestInterval(FAST_INTERVAL_CEILING_IN_MILLISECONDS);
+	public void setAltitude(float min, float diff, float max){
+		if(biking != null)
+			biking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max));
 
-		locationClient = new LocationClient(c, this, this);
-
-		locationClient.connect();
-		updates_requested = true;
+		if(walking != null)
+			walking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max));
 	}
 
 	@Override
@@ -126,6 +124,18 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		//Setting speed
 		setSpeed(location.getSpeed()*3.6f);
+
+		//Setting altitude
+		if(location.hasAltitude()){
+			if(((float) location.getAltitude()) > altitude_max)
+				altitude_max = (float) location.getAltitude();
+
+			if(((float) location.getAltitude()) < altitude_min)
+				altitude_min = (float) location.getAltitude();
+
+			if(altitude_max < 10000 & altitude_min > -1000)
+				setAltitude(altitude_min, altitude_max-altitude_min, altitude_max);
+		}
 
 		//Setting distance
 		if(last_location != null){
@@ -161,6 +171,19 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		Log.d(APPTAG, "onStop");
 		stopPeriodicUpdates();
 	}
+
+	public void requestUpdates(){
+		locationRequest = LocationRequest.create();
+		locationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+		locationRequest.setFastestInterval(FAST_INTERVAL_CEILING_IN_MILLISECONDS);
+
+		locationClient = new LocationClient(c, this, this);
+
+		locationClient.connect();
+		updates_requested = true;
+	}
+
 
 	private void startPeriodicUpdates() {
 		Log.d(APPTAG, "startPeriodicUpdates");
