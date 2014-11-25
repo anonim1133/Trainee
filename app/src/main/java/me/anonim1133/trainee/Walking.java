@@ -7,6 +7,7 @@ import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
@@ -77,6 +78,9 @@ public class Walking extends Fragment{
 				Chronometer chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
 				chrono.setBase(SystemClock.elapsedRealtime());
 				chrono.start();
+
+				rootView.findViewById(R.id.btn_start).setVisibility(View.GONE);
+				rootView.findViewById(R.id.btn_stop).setVisibility(View.VISIBLE);
 			}
 
 			public void onBtnStop() {
@@ -85,6 +89,9 @@ public class Walking extends Fragment{
 
 				Chronometer chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
 				chrono.stop();
+
+				rootView.findViewById(R.id.btn_start).setVisibility(View.VISIBLE);
+				rootView.findViewById(R.id.btn_stop).setVisibility(View.GONE);
 			}
 
 			public void setActive(boolean active) {

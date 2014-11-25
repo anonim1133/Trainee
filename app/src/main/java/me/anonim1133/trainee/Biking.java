@@ -76,6 +76,9 @@ public class Biking extends Fragment {
 		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
 		chrono.setBase(SystemClock.elapsedRealtime());
 		chrono.start();
+
+		rootView.findViewById(R.id.btn_start).setVisibility(View.GONE);
+		rootView.findViewById(R.id.btn_stop).setVisibility(View.VISIBLE);
 	}
 
 	public void onBtnStop(){
@@ -84,6 +87,9 @@ public class Biking extends Fragment {
 
 		Chronometer chrono = (Chronometer)rootView.findViewById(R.id.chronometer);
 		chrono.stop();
+
+		rootView.findViewById(R.id.btn_start).setVisibility(View.VISIBLE);
+		rootView.findViewById(R.id.btn_stop).setVisibility(View.GONE);
 	}
 
 	public void setActive(boolean active){
