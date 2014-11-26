@@ -53,8 +53,6 @@ public class Biking extends Fragment {
 					if(active_time < (SystemClock.elapsedRealtime() - chronometer.getBase()))
 						active_time++;
 
-
-
 					setTimeActive(getTimeActive());
 				}
 			}
