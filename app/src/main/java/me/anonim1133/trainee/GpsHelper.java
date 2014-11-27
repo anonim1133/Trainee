@@ -161,7 +161,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		setSpeed(location.getSpeed()*3.6f);
 
 		//Setting altitude
-		if(location.hasAltitude() && location.getAltitude() <= 10.0){
+		if(location.hasAltitude() && (location.getAccuracy() <= 10.0)){
 			if(((float) location.getAltitude()) > altitude_max)
 				altitude_max = (float) location.getAltitude();
 
