@@ -257,16 +257,9 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		String filename = gpx.close();
 
 		if(biking != null){
-
-			String time = biking.getTime();
-			String time_active = biking.getTimeActive();
-
-			db.addTraining(filename, "Biking", time, time_active, speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+			db.addTraining(filename, "Biking", biking.getTimeMs(), biking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
 		}else if(walking != null){
-
-			String time = walking.getTime();
-			String time_active = walking.getTimeActive();
-			db.addTraining(filename, "Walking" ,time, time_active, speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+			db.addTraining(filename, "Walking" ,walking.getTimeMs(), walking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
 		}
 
 

@@ -13,13 +13,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	private static String DATABASE_NAME = "zacja.db";
 	private static final int DATABASE_VERSION = 3;
 
-	private Context c;
 	private SQLiteDatabase db;
 	private DBTraining training;
 
 	public DataBaseHelper(Context context) throws SQLException {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		this.c = context;
 
 		Log.d(TAG, "konstruktor");
 		this.open();
@@ -53,7 +51,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		this.db = this.getWritableDatabase();
 	}
 
-	public boolean addTraining(String gpx, String training_type, String time, String time_active, float speed_max, float speed_avg, float tempo_min, float tempo_avg, float distance, int altitude_min, int altitude_max, int altitude_upward, int altitude_downward){
+	public boolean addTraining(String gpx, String training_type, long time, long time_active, float speed_max, float speed_avg, float tempo_min, float tempo_avg, float distance, int altitude_min, int altitude_max, int altitude_upward, int altitude_downward){
 		return training.add(gpx, training_type, time, time_active, speed_max, speed_avg, tempo_min, tempo_avg, distance, altitude_min, altitude_max, altitude_upward, altitude_downward);
 	}
 

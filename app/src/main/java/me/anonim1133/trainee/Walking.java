@@ -100,12 +100,20 @@ public class Walking extends Fragment{
 		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
 
+	public long getTimeMs(){
+		return SystemClock.elapsedRealtime() - chrono.getBase();
+	}
+
 	public String getTimeActive(){
 		short hours = (short) (active_time / 3600);
 		short minutes = (short) ((active_time % 3600) / 60);
 		short seconds = (short) (active_time % 60);
 
 		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	}
+
+	public long getTimeActiveMs(){
+		return active_time;
 	}
 
 	public void setActive(boolean active) {

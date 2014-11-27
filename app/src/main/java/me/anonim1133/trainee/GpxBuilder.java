@@ -20,7 +20,7 @@ public class GpxBuilder {
 		Time today = new Time();
 		today.setToNow();
 
-		String time = today.format("yyyy-MM-ddTHH:mm:ssZ");
+		String time = today.format2445();
 
 		filename = time + ".gpx";
 

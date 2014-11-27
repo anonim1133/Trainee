@@ -15,9 +15,10 @@ public class DBTraining {
 		this.db = database;
 	}
 
-	public boolean add(String gpx, String training_type, String time, String time_active, float speed_max, float speed_avg, float tempo_min, float tempo_avg, float distance, int altitude_min, int altitude_max, int altitude_upward, int altitude_downward){
+	public boolean add(String gpx, String training_type, long time, long time_active, float speed_max, float speed_avg, float tempo_min, float tempo_avg, float distance, int altitude_min, int altitude_max, int altitude_upward, int altitude_downward){
 		ContentValues values = new ContentValues();
 		values.put("gpx", gpx);
+		values.put("training_type", training_type);
 		values.put("time", time);
 		values.put("time_active", time_active);
 		values.put("speed_max", speed_max);
