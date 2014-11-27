@@ -76,9 +76,6 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	public void setSpeed(float speed){
-		if(speed > speed_max)
-			speed_max = speed;
-
 		if(biking != null)
 			biking.setSpeed(String.format("%.2f", speed));
 
@@ -86,17 +83,18 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 				walking.setSpeed(String.format("%.2f", speed));
 		}
 
-		tempo(speed);
-
-		if(speed > 0)
+		if(speed > 0) {
 			setAverageSpeed(speed);
-
-		if(speed > 0)
 			setMaxSpeed(speed);
 
+			tempo(speed);
+		}
 	}
 
 	public void setMaxSpeed(float speed){
+		if(speed > speed_max)
+			speed_max = speed;
+
 		if(biking != null)
 			biking.setSpeedMax(String.format("%.2f", avg_speed.add(speed)));
 
@@ -113,10 +111,9 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	public void tempo(float speed){
-		if(speed > 0){
 			float tempo = 60/speed;
 
-			if(tempo_min > tempo)
+			if(tempo < tempo_min)
 				tempo_min = tempo;
 
 			if(biking != null)
@@ -125,8 +122,15 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			if(walking != null)
 				walking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
 
-			setAverageTempo(tempo);
-		}
+			setAverageTempo(tempo_min);
+	}
+
+	public void setTempoMin(float tempo){
+		if(biking != null)
+			biking.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
+
+		if(walking != null)
+			walking.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
 	}
 
 	public void setAverageTempo(float speed){
@@ -146,11 +150,15 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	public void setAltitude(float min, float diff, float max, float upward, float downward){
-		if(biking != null)
+		if(biking != null) {
 			biking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
+			biking.setGoal(String.valueOf(last_location.getAccuracy()));
+		}
 
-		if(walking != null)
+		if(walking != null) {
 			walking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
+			walking.setGoal(String.valueOf(last_location.getAccuracy()));
+		}
 	}
 
 	@Override

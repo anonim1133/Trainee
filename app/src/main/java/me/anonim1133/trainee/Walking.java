@@ -51,8 +51,8 @@ public class Walking extends Fragment{
 		chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
 			@Override
 			public void onChronometerTick(Chronometer chronometer) {
-				if(active){
-					if(active_time < (SystemClock.elapsedRealtime() - chronometer.getBase()))
+				if (active) {
+					if (active_time < (SystemClock.elapsedRealtime() - chronometer.getBase()))
 						active_time++;
 
 					setTimeActive(getTimeActive());
@@ -142,6 +142,11 @@ public class Walking extends Fragment{
 
 	public void setTempo(String speed) {
 		TextView tv = (TextView) rootView.findViewById(R.id.txt_tempo);
+		tv.setText(speed);
+	}
+
+	public void setTempoMin(String speed) {
+		TextView tv = (TextView) rootView.findViewById(R.id.txt_tempo_min);
 		tv.setText(speed);
 	}
 

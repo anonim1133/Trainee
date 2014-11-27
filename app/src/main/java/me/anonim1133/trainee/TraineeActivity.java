@@ -1,29 +1,26 @@
 package me.anonim1133.trainee;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 
 
 public class TraineeActivity extends Activity {
+
+	Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trainee);
         if (savedInstanceState == null) {
+	        fragment = new SelectActivity();
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new SelectActivity())
+                    .add(R.id.container, fragment)
                     .commit();
         }
     }
@@ -31,35 +28,40 @@ public class TraineeActivity extends Activity {
 	/* Selecting proper fragments for activities */
 
 	public void selectActivity(View view){
+		fragment = new SelectActivity();
 		getFragmentManager().beginTransaction()
-				.replace(R.id.container, new SelectActivity())
+				.replace(R.id.container, fragment)
 				.commit();
 	}
 
 	public void selectBiking(View view){
+		fragment = new Biking();
 		getFragmentManager().beginTransaction()
-				.replace(R.id.container, new Biking())
+				.replace(R.id.container, fragment)
 				.addToBackStack(null)
 				.commit();
 	}
 
 	public void selectWalking(View view){
+		fragment = new Walking();
 		getFragmentManager().beginTransaction()
-				.replace(R.id.container, new Walking())
+				.replace(R.id.container, fragment)
 				.addToBackStack(null)
 				.commit();
 	}
 
 	public void selectJumping(View view){
+		fragment =  new Jumping();
 		getFragmentManager().beginTransaction()
-				.replace(R.id.container, new Jumping())
+				.replace(R.id.container,fragment)
 				.addToBackStack(null)
 				.commit();
 	}
 
 	public void selectSquats(View view){
+		fragment = new Squats();
 		getFragmentManager().beginTransaction()
-				.replace(R.id.container, new Squats())
+				.replace(R.id.container, fragment)
 				.addToBackStack(null)
 				.commit();
 	}
