@@ -76,7 +76,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	public void setSpeed(float speed){
-		if(speed_max < speed)
+		if(speed > speed_max)
 			speed_max = speed;
 
 		if(biking != null)

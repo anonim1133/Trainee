@@ -131,7 +131,7 @@ public class Walking extends Fragment{
 	}
 
 	public void setSpeedMax(String speed) {
-		TextView tv = (TextView) rootView.findViewById(R.id.txt_speed);
+		TextView tv = (TextView) rootView.findViewById(R.id.txt_speed_max);
 		tv.setText(speed);
 	}
 
