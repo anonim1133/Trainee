@@ -26,7 +26,8 @@
 
 	<TableRow
 		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow11">
 
 		<TextView
 			android:layout_width="wrap_content"
@@ -41,7 +42,13 @@
 			android:layout_height="20px"
 			android:layout_column="2"/>
 
-		<TextView
+		<Chronometer
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/chronometer"
+			android:layout_column="3"/>
+
+		TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
@@ -50,7 +57,7 @@
 			android:layout_column="3"
 			android:gravity="right"/>
 
-		<TextView
+		TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
@@ -127,13 +134,6 @@
 			android:layout_column="3"
 			android:gravity="right"/>
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAppearance="?android:attr/textAppearanceSmall"
-			android:text="h"
-			android:id="@+id/label_succession_time_unit"
-			android:layout_column="4"/>
 	</TableRow>
 
 	<TableRow
@@ -156,6 +156,46 @@
 			android:id="@+id/txt_succession_jump_count"
 			android:layout_column="3"
 			android:gravity="right"/>
+
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Start"
+			android:id="@+id/btn_start"
+			android:layout_column="1"
+			android:layout_span="6"/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Next"
+			android:id="@+id/btn_next"
+			android:layout_column="2"
+			android:visibility="gone"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="2"/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Stop"
+			android:id="@+id/btn_stop"
+			android:layout_column="2"
+			android:visibility="gone"/>
 
 	</TableRow>
 </TableLayout>
