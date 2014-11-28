@@ -28,18 +28,18 @@ import me.anonim1133.trainee.utils.GpxBuilder;
 
 public class GpsHelper extends Activity implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 
-	private static final String APPTAG = "GpsHelper";
+	private static final String TAG = "GpsHelper";
 
 	//Number of samples for counting average
 	private static final short AVERAGE_SAMPLE_COUNT = 100;
 
-	public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
-	public static final int MILLISECONDS_PER_SECOND = 1000;
-	public int UPDATE_INTERVAL_IN_SECONDS = 5;
-	public int FAST_CEILING_IN_SECONDS = 1;
-	public long UPDATE_INTERVAL_IN_MILLISECONDS =
+	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+	private static final int MILLISECONDS_PER_SECOND = 1000;
+	private int UPDATE_INTERVAL_IN_SECONDS = 5;
+	private int FAST_CEILING_IN_SECONDS = 1;
+	private long UPDATE_INTERVAL_IN_MILLISECONDS =
 			MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
-	public long FAST_INTERVAL_CEILING_IN_MILLISECONDS =
+	private long FAST_INTERVAL_CEILING_IN_MILLISECONDS =
 			MILLISECONDS_PER_SECOND * FAST_CEILING_IN_SECONDS;
 	private boolean is_counting_steps = false;
 
@@ -57,10 +57,26 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private Average avg_tempo;
 
 	private Location last_location;
+
+	private String user_name = "Unnamed";
+	private String activity_name = "Unknown";
+
+	private boolean active = false;
+
+	private long time = 0;
+	private long time_active = 0;
 	private float total_distance = 0;
+	private float speed = 0;
+
 	private float speed_max = 0;
+	private float speed_avg = 0;
+	private float tempo = 0;
+	private float tempo_avg = 0;
 	private float tempo_min = 50.0f;
+
+	private float altitude = 0;
 	private float altitude_min = 10000;
+	private float altitude_diff = 0;
 	private float altitude_max = -1000;
 	private float upward = 0;
 	private float downward = 0;
@@ -68,39 +84,70 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	private boolean updates_requested = false;
 
-	public GpsHelper(Context context, Biking biking, int min_interval, int max_interval) {
+	public GpsHelper(Context context, int min_interval, int max_interval) {
 		this.c = context;
-		this.biking = biking;
 
 		UPDATE_INTERVAL_IN_SECONDS = max_interval;
 		FAST_CEILING_IN_SECONDS = min_interval;
 	}
 
-	public GpsHelper(Context context, Running running, int min_interval, int max_interval) {
-		this.c = context;
-		this.running = running;
 
-		UPDATE_INTERVAL_IN_SECONDS = max_interval;
-		FAST_CEILING_IN_SECONDS = min_interval;
+	@Override
+	public void onLocationChanged(Location location) {
+		Log.d(TAG, "onLocationChanged");
+
+		//Setting speed
+		setSpeed(location.getSpeed()*3.6f);
+
+		//Setting distance
+		if(last_location != null){
+			setDistance(last_location.distanceTo(location) / 1000);
+
+			//Setting active
+			if(!last_location.hasSpeed() && !location.hasSpeed())
+				setActive(false);
+			else
+				setActive(true);
+
+			//Setting altitude
+			if(location.hasAltitude() && (location.getAccuracy() <= 10.0)){
+				setAltitude((float)location.getAltitude(), location.getAltitude()-last_location.getAltitude());
+			}
+		}
+
+		//Saving point to gpx
+		if(!is_counting_steps)
+			gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f,	location.getTime());
+		else
+			gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f, step_count,	location.getTime());
+
+		last_location = location;
 	}
 
-	public GpsHelper(Context context, Walking walking, int min_interval, int max_interval) {
-		this.c = context;
-		this.walking = walking;
-
-		UPDATE_INTERVAL_IN_SECONDS = max_interval;
-		FAST_CEILING_IN_SECONDS = min_interval;
-	}
+	/* SETTERS */
 
 	public void setActive(boolean active){
-		if(biking != null)
-			biking.setActive(active);
+		this.active = active;
+	}
 
-		if(running != null)
-			running.setActive(active);
+	public boolean isActive() {
+		return active;
+	}
 
-		if(walking != null)
-			walking.setActive(active);
+	public void setTime_active(long time_active) {
+		this.time_active = time_active;
+	}
+
+	public void setTime(long time) {
+		this.time = time;
+	}
+
+	public void setUserName(String name){
+		user_name = name;
+	}
+
+	public void setActivityName(String name){
+		activity_name = name;
 	}
 
 	public void setStepCounting(boolean bool){
@@ -112,14 +159,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	public void setSpeed(float speed){
-		if(biking != null)
-			biking.setSpeed(String.format("%.2f", speed));
-
-		if(running != null)
-				running.setSpeed(String.format("%.2f", speed));
-
-		if(walking != null)
-			walking.setSpeed(String.format("%.2f", speed));
+		this.speed = speed;
 
 		if(speed > 0) {
 			setAverageSpeed(speed);
@@ -132,159 +172,112 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	public void setMaxSpeed(float speed){
 		if(speed > speed_max)
 			speed_max = speed;
-
-		if(biking != null)
-			biking.setSpeedMax(String.format("%.2f", speed_max));
-
-		if(running != null)
-			running.setSpeedMax(String.format("%.2f", speed_max));
-
-		if(walking != null)
-			walking.setSpeedMax(String.format("%.2f", speed_max));
 	}
 
 	public void setAverageSpeed(float speed){
-		if(speed > 0){
-			if(biking != null)
-				biking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
-
-			if(running != null)
-				running.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
-
-			if(walking != null)
-				walking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
-		}
+		if(speed > 0)
+			speed_avg = avg_speed.add(speed);
 	}
 
 	public void tempo(float speed){
-
-		float tempo;
 		if(speed != 0){
 			 tempo = 60/speed;
 		}else {
 			tempo = 0;
 		}
 
-		if(tempo < tempo_min && tempo != 0)
-			tempo_min = tempo;
-
-		if(biking != null)
-			biking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
-
-		if(running != null)
-			running.setTempo(String.format("%.2f", tempo).replace(",", ":"));
-
-		if(walking != null)
-			walking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
-
 		setAverageTempo(tempo);
 		setTempoMin(tempo_min);
 	}
 
 	public void setTempoMin(float tempo){
-		if(biking != null)
-			biking.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
-
-		if(running != null)
-			running.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
-
-		if(walking != null)
-			walking.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
+		if(tempo < tempo_min && tempo != 0)
+			tempo_min = tempo;
 	}
 
-	public void setAverageTempo(float speed){
-		if(speed > 0){
-			if(biking != null)
-				biking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)));
-
-			if(running != null)
-				running.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)).replace(",", ":"));
-
-			if(walking != null)
-				walking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)).replace(",", ":"));
-		}
+	public void setAverageTempo(float tempo){
+		if(tempo > 0)
+			avg_tempo.add(tempo);
 	}
 
 	public void setDistance(float distance){
-		if(biking != null)
-			biking.setDistance(String.format("%.2f", distance));
-
-		if(running != null)
-			running.setDistance(String.format("%.2f", distance));
-
-		if(walking != null)
-			walking.setDistance(String.format("%.2f", distance));
+		total_distance += distance;
 	}
 
-	public void setAltitude(float min, float diff, float max, float upward, float downward){
-		if(biking != null) {
-			biking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
-			biking.setGoal(String.valueOf(last_location.getAccuracy()));
-		}
+	public void setAltitude(double alt, double difference){
+		float altitude_difference = (float)difference;
 
-		if(running != null) {
-			running.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
-			running.setGoal(String.valueOf(last_location.getAccuracy()));
-		}
+		altitude = (float)alt;
+		altitude_diff = (altitude_max - altitude_min);
 
-		if(walking != null) {
-			walking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
-			walking.setGoal(String.valueOf(last_location.getAccuracy()));
-		}
+		if(alt > altitude_max)
+			altitude_max = (float)alt;
+
+		if(alt < altitude_min)
+			altitude_min = (float)alt;
+
+		if(altitude_difference < 0) downward += -altitude_difference;
+		else if(altitude_difference > 0) upward += altitude_difference;
+
 	}
 
-	@Override
-	public void onLocationChanged(Location location) {
-		Log.d(APPTAG, "onLocationChanged");
 
-		//Setting speed
-		setSpeed(location.getSpeed()*3.6f);
+	/* GETTERS */
+	public float getSpeed_avg() {
+		return speed_avg;
+	}
 
-		//Setting altitude
-		if(location.hasAltitude() && (location.getAccuracy() <= 10.0)){
-			if(((float) location.getAltitude()) > altitude_max)
-				altitude_max = (float) location.getAltitude();
+	public float getSpeed_max() {
+		return speed_max;
+	}
 
-			if(((float) location.getAltitude()) < altitude_min)
-				altitude_min = (float) location.getAltitude();
+	public float getSpeed() {
+		return speed;
+	}
 
-			if(last_location != null && location.hasAltitude() && last_location.hasAltitude()){
-				float altitude_difference = (float)(location.getAltitude() - last_location.getAltitude());
+	public float getTotal_distance() {
+		return total_distance;
+	}
 
-				if(altitude_difference < 0) downward += -altitude_difference;
-				else upward += altitude_difference;
-			}
+	public float getTempo() {
+		return tempo;
+	}
 
-			if(altitude_max < 10000 & altitude_min > -1000) {
-				float diff = (altitude_max - altitude_min);
-				setAltitude(altitude_min, diff, altitude_max, upward, downward);
-			}
-		}
+	public float getTempo_avg() {
+		return tempo_avg;
+	}
 
-		//Setting distance
-		if(last_location != null){
-			total_distance += last_location.distanceTo(location);
-			setDistance(total_distance / 1000);
+	public float getTempo_min() {
+		return tempo_min;
+	}
 
-			//Setting active
-			if(!last_location.hasSpeed() && !location.hasSpeed())
-				setActive(false);
-			else
-				setActive(true);
-		}
+	public float getAltitude() {
+		return altitude;
+	}
 
-		//Saving point to gpx
-		if(!is_counting_steps)
-			gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f,	location.getTime());
-		else
-			gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f, step_count,	location.getTime());
+	public float getAltitude_min() {
+		return altitude_min;
+	}
 
-		last_location = location;
+	public float getAltitude_diff() {
+		return altitude_diff;
+	}
+
+	public float getAltitude_max() {
+		return altitude_max;
+	}
+
+	public float getUpward() {
+		return upward;
+	}
+
+	public float getDownward() {
+		return downward;
 	}
 
 	@Override
 	public void onConnected(Bundle bundle) {
-		Log.d(APPTAG, "onConnected");
+		Log.d(TAG, "onConnected");
 		if (updates_requested) {
 			startPeriodicUpdates();
 		}
@@ -292,13 +285,13 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	@Override
 	public void onDisconnected() {
-		Log.d(APPTAG, "onDisconnected");
+		Log.d(TAG, "onDisconnected");
 		// Display the connection status
 	}
 
 	@Override
 	public void onStop(){
-		Log.d(APPTAG, "onStop");
+		Log.d(TAG, "onStop");
 		stopPeriodicUpdates();
 	}
 
@@ -313,13 +306,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		locationClient.connect();
 		updates_requested = true;
 
-		if(biking != null)
-			gpx = new GpxBuilder(c, "Biking", "Unknown");
-		else if(running != null)
-			gpx = new GpxBuilder(c, "Running", "Unknown");
-		else if(walking != null)
-			gpx = new GpxBuilder(c, "Walking", "Unknown");
-		else gpx = new GpxBuilder(c, "Unknown", "Unknown");
+		gpx = new GpxBuilder(c, activity_name, user_name);
 
 		try {
 			db = new DataBaseHelper(c);
@@ -329,7 +316,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	private void startPeriodicUpdates() {
-		Log.d(APPTAG, "startPeriodicUpdates");
+		Log.d(TAG, "startPeriodicUpdates");
 		locationClient.requestLocationUpdates(locationRequest, this);
 
 		avg_speed = new Average(AVERAGE_SAMPLE_COUNT);
@@ -337,17 +324,12 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	}
 
 	public void stopPeriodicUpdates() {
-		Log.d(APPTAG, "stopPeriodicUpdates");
+		Log.d(TAG, "stopPeriodicUpdates");
 
 		String filename = gpx.close();
 
-		if(biking != null){
-			db.addTraining(filename, "Biking", biking.getTimeMs(), biking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
-		}else if(running != null){
-			db.addTraining(filename, "Running" , running.getTimeMs(), running.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
-		}else if(walking != null){
-			db.addTraining(filename, "Running" , walking.getTimeMs(), walking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
-		}
+		db.addTraining(filename, user_name, time, time_active, speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+
 
 
 		locationClient.removeLocationUpdates(this);
@@ -368,13 +350,13 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			ErrorDialogFragment errorFragment = new ErrorDialogFragment();
 
 			// Show the error dialog in the DialogFragment
-			errorFragment.show(getFragmentManager(), APPTAG);
+			errorFragment.show(getFragmentManager(), TAG);
 		}
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
-		Log.d(APPTAG, "onConnectionFailed");
+		Log.d(TAG, "onConnectionFailed");
     /*
      * Google Play services can resolve some errors it detects.
      * If the error has a resolution, try sending an Intent to
