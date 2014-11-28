@@ -22,9 +22,9 @@ public class Jumping extends Fragment {
 	boolean active = false;
 	int moves = 0;
 
-	int succesion = 0;
-	long time_succesion = 0;
-	int moves_succesion = 0;
+	int succession = 0;
+	long time_succession = 0;
+	int moves_succession = 0;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,13 +57,13 @@ public class Jumping extends Fragment {
 		chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
 			@Override
 			public void onChronometerTick(Chronometer chronometer) {
-			if (time_succesion < getTimeMs()-1)
-				time_succesion++;
+			if (time_succession < getTimeMs()-1)
+				time_succession++;
 
 			int last_moves = moves;
 			moves = accelerometer.getMoveCount();
 
-			moves_succesion += moves - last_moves;
+			moves_succession += moves - last_moves;
 
 			updateUI();
 			}
@@ -112,18 +112,18 @@ public class Jumping extends Fragment {
 	}
 
 	public String getTimeSuccession(){
-		short hours = (short) (time_succesion / 3600);
-		short minutes = (short) ((time_succesion % 3600) / 60);
-		short seconds = (short) (time_succesion % 60);
+		short hours = (short) (time_succession / 3600);
+		short minutes = (short) ((time_succession % 3600) / 60);
+		short seconds = (short) (time_succession % 60);
 
 		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
 
 	private void nextSuccession(){
-		succesion++;
+		succession++;
 
-		time_succesion = 0;
-		moves_succesion = 0;
+		time_succession = 0;
+		moves_succession = 0;
 	}
 
 	/* UI values setting */
@@ -142,7 +142,7 @@ public class Jumping extends Fragment {
 
 	private void updateSuccession(){
 		TextView tv = (TextView) rootView.findViewById(R.id.txt_succession);
-		tv.setText(String.valueOf(succesion));
+		tv.setText(String.valueOf(succession));
 	}
 
 	private void updateSuccessionTime(){
@@ -152,6 +152,6 @@ public class Jumping extends Fragment {
 
 	private void updateSuccessionMoves(){
 		TextView tv = (TextView) rootView.findViewById(R.id.txt_succession_jump_count);
-		tv.setText(String.valueOf(moves_succesion));
+		tv.setText(String.valueOf(moves_succession));
 	}
 }
