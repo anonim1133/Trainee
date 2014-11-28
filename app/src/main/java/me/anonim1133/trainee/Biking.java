@@ -23,7 +23,7 @@ public class Biking extends Fragment {
 	public void onAttach(Activity activity){
 		super.onAttach(activity);
 
-		gps = new GpsHelper(activity, this);
+		gps = new GpsHelper(activity, this, 1, 5);
 	}
 
 	@Override

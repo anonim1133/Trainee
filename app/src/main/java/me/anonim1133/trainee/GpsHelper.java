@@ -28,11 +28,11 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	public final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	public static final int MILLISECONDS_PER_SECOND = 1000;
-	public static final int UPDATE_INTERVAL_IN_SECONDS = 5;
-	public static final int FAST_CEILING_IN_SECONDS = 1;
-	public static final long UPDATE_INTERVAL_IN_MILLISECONDS =
+	public int UPDATE_INTERVAL_IN_SECONDS = 5;
+	public int FAST_CEILING_IN_SECONDS = 1;
+	public long UPDATE_INTERVAL_IN_MILLISECONDS =
 			MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
-	public static final long FAST_INTERVAL_CEILING_IN_MILLISECONDS =
+	public long FAST_INTERVAL_CEILING_IN_MILLISECONDS =
 			MILLISECONDS_PER_SECOND * FAST_CEILING_IN_SECONDS;
 
 	private LocationClient locationClient;
@@ -59,19 +59,28 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	private boolean updates_requested = false;
 
-	public GpsHelper(Context context, Biking biking) {
+	public GpsHelper(Context context, Biking biking, int min_interval, int max_interval) {
 		this.c = context;
 		this.biking = biking;
+
+		UPDATE_INTERVAL_IN_SECONDS = max_interval;
+		FAST_CEILING_IN_SECONDS = min_interval;
 	}
 
-	public GpsHelper(Context context, Running running) {
+	public GpsHelper(Context context, Running running, int min_interval, int max_interval) {
 		this.c = context;
 		this.running = running;
+
+		UPDATE_INTERVAL_IN_SECONDS = max_interval;
+		FAST_CEILING_IN_SECONDS = min_interval;
 	}
 
-	public GpsHelper(Context context, Walking walking) {
+	public GpsHelper(Context context, Walking walking, int min_interval, int max_interval) {
 		this.c = context;
 		this.walking = walking;
+
+		UPDATE_INTERVAL_IN_SECONDS = max_interval;
+		FAST_CEILING_IN_SECONDS = min_interval;
 	}
 
 	public void setActive(boolean active){
