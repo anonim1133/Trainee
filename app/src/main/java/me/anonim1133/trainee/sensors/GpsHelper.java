@@ -19,9 +19,6 @@ import com.google.android.gms.location.LocationRequest;
 import java.sql.SQLException;
 
 import me.anonim1133.trainee.db.DataBaseHelper;
-import me.anonim1133.trainee.fragments.Biking;
-import me.anonim1133.trainee.fragments.Running;
-import me.anonim1133.trainee.fragments.Walking;
 import me.anonim1133.trainee.utils.Average;
 import me.anonim1133.trainee.utils.GpxBuilder;
 
@@ -49,9 +46,6 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private DataBaseHelper db;
 
 	private Context c;
-	private Biking biking;
-	private Running running;
-	private Walking walking;
 
 	private Average avg_speed;
 	private Average avg_tempo;
@@ -90,7 +84,6 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		UPDATE_INTERVAL_IN_SECONDS = max_interval;
 		FAST_CEILING_IN_SECONDS = min_interval;
 	}
-
 
 	@Override
 	public void onLocationChanged(Location location) {
