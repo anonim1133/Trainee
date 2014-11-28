@@ -42,7 +42,9 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 	private Context c;
 	private Biking biking;
+	private Running running;
 	private Walking walking;
+
 	private AverageSpeed avg_speed;
 	private AverageSpeed avg_tempo;
 
@@ -62,6 +64,11 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		this.biking = biking;
 	}
 
+	public GpsHelper(Context context, Running running) {
+		this.c = context;
+		this.running = running;
+	}
+
 	public GpsHelper(Context context, Walking walking) {
 		this.c = context;
 		this.walking = walking;
@@ -71,6 +78,9 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		if(biking != null)
 			biking.setActive(active);
 
+		if(running != null)
+			running.setActive(active);
+
 		if(walking != null)
 			walking.setActive(active);
 	}
@@ -79,9 +89,11 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		if(biking != null)
 			biking.setSpeed(String.format("%.2f", speed));
 
-		if(walking != null) {
-				walking.setSpeed(String.format("%.2f", speed));
-		}
+		if(running != null)
+				running.setSpeed(String.format("%.2f", speed));
+
+		if(walking != null)
+			walking.setSpeed(String.format("%.2f", speed));
 
 		if(speed > 0) {
 			setAverageSpeed(speed);
@@ -96,54 +108,83 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			speed_max = speed;
 
 		if(biking != null)
-			biking.setSpeedMax(String.format("%.2f", avg_speed.add(speed)));
+			biking.setSpeedMax(String.format("%.2f", speed_max));
 
-		if(walking != null && speed > 0)
-			walking.setSpeedMax(String.format("%.2f", avg_speed.add(speed)));
+		if(running != null)
+			running.setSpeedMax(String.format("%.2f", speed_max));
+
+		if(walking != null)
+			walking.setSpeedMax(String.format("%.2f", speed_max));
 	}
 
 	public void setAverageSpeed(float speed){
-		if(biking != null)
-			biking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
+		if(speed > 0){
+			if(biking != null)
+				biking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
 
-		if(walking != null && speed > 0)
-			walking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
+			if(running != null)
+				running.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
+
+			if(walking != null)
+				walking.setSpeedAVG(String.format("%.2f", avg_speed.add(speed)));
+		}
 	}
 
 	public void tempo(float speed){
-			float tempo = 60/speed;
 
-			if(tempo < tempo_min)
-				tempo_min = tempo;
+		float tempo;
+		if(speed != 0){
+			 tempo = 60/speed;
+		}else {
+			tempo = 0;
+		}
 
-			if(biking != null)
-				biking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
+		if(tempo < tempo_min && tempo != 0)
+			tempo_min = tempo;
 
-			if(walking != null)
-				walking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
+		if(biking != null)
+			biking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
 
-			setAverageTempo(tempo_min);
+		if(running != null)
+			running.setTempo(String.format("%.2f", tempo).replace(",", ":"));
+
+		if(walking != null)
+			walking.setTempo(String.format("%.2f", tempo).replace(",", ":"));
+
+		setAverageTempo(tempo);
+		setTempoMin(tempo_min);
 	}
 
 	public void setTempoMin(float tempo){
 		if(biking != null)
 			biking.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
 
+		if(running != null)
+			running.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
+
 		if(walking != null)
 			walking.setTempoMin(String.format("%.2f", tempo).replace(",", ":"));
 	}
 
 	public void setAverageTempo(float speed){
-		if(biking != null)
-			biking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)));
+		if(speed > 0){
+			if(biking != null)
+				biking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)));
 
-		if(walking != null && speed > 0)
-			walking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)).replace(",", ":"));
+			if(running != null)
+				running.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)).replace(",", ":"));
+
+			if(walking != null)
+				walking.setTempoAVG(String.format("%.2f", avg_tempo.add(speed)).replace(",", ":"));
+		}
 	}
 
 	public void setDistance(float distance){
 		if(biking != null)
 			biking.setDistance(String.format("%.2f", distance));
+
+		if(running != null)
+			running.setDistance(String.format("%.2f", distance));
 
 		if(walking != null)
 			walking.setDistance(String.format("%.2f", distance));
@@ -153,6 +194,11 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		if(biking != null) {
 			biking.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
 			biking.setGoal(String.valueOf(last_location.getAccuracy()));
+		}
+
+		if(running != null) {
+			running.setAltitude(String.valueOf(min), String.valueOf(diff), String.valueOf(max), String.valueOf(upward), String.valueOf(downward));
+			running.setGoal(String.valueOf(last_location.getAccuracy()));
 		}
 
 		if(walking != null) {
@@ -230,8 +276,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	public void requestUpdates(){
 		locationRequest = LocationRequest.create();
 		locationRequest.setInterval(UPDATE_INTERVAL_IN_MILLISECONDS);
-		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 		locationRequest.setFastestInterval(FAST_INTERVAL_CEILING_IN_MILLISECONDS);
+		locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 		locationClient = new LocationClient(c, this, this);
 
@@ -240,8 +286,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		if(biking != null)
 			gpx = new GpxBuilder(c, "Biking", "Unknown");
-		else if(walking != null)
-			gpx = new GpxBuilder(c, "Walking", "Unknown");
+		else if(running != null)
+			gpx = new GpxBuilder(c, "Running", "Unknown");
 		else gpx = new GpxBuilder(c, "Unknown", "Unknown");
 
 		try {
@@ -266,8 +312,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		if(biking != null){
 			db.addTraining(filename, "Biking", biking.getTimeMs(), biking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
-		}else if(walking != null){
-			db.addTraining(filename, "Walking" ,walking.getTimeMs(), walking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+		}else if(running != null){
+			db.addTraining(filename, "Running" , running.getTimeMs(), running.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
 		}
 
 

@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow3">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Czas"
+			android:id="@+id/label_time"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<Chronometer
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/chronometer"
+			android:layout_column="5"/>
+
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow4">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Aktywność"
+			android:id="@+id/label_time_active"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_time_active"
+			android:layout_column="5"/>
+
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Prędkość max"
+			android:id="@+id/label_speed_max"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_speed_max"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km/h"
+			android:id="@+id/label_speed_max_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Prędkość"
+			android:id="@+id/label_speed"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_speed"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km/h"
+			android:id="@+id/label_speed_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow12">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Średnia"
+			android:id="@+id/label_avg_speed"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_avg_speed"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km/h"
+			android:id="@+id/label_avg_speed_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Tempo"
+			android:id="@+id/label_tempo"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_tempo"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="min/km"
+			android:id="@+id/label_tempo_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Tempo min"
+			android:id="@+id/label_tempo_min"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_tempo_min"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="min/km"
+			android:id="@+id/label_tempo_min_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow2">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Średnie"
+			android:id="@+id/label_avg_tempo"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_avg_tempo"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="min/km"
+			android:id="@+id/label_avg_tempo_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow5">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Dystans"
+			android:id="@+id/label_distance"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_distance"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km"
+			android:id="@+id/label_distance_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow8">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Min wysokość"
+			android:id="@+id/label_altitude_min"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_altitude_min"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="m"
+			android:id="@+id/label_altitude_min_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow7">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Różnica "
+			android:id="@+id/label_altitude_diff"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_altitude_diff"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="m"
+			android:id="@+id/label_altitude_diff_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow6">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Max wysokość"
+			android:id="@+id/label_altitude_max"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_altitude_max"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="m"
+			android:id="@+id/label_altitude_max_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow9">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="W górę"
+			android:id="@+id/label_altitude_upward"
+			android:layout_column="2"
+			/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_altitude_upward"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="m"
+			android:id="@+id/label_altitude_upward_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow10">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="W dół"
+			android:id="@+id/label_altitude_downward"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_altitude_downward"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="m"
+			android:id="@+id/label_altitude_downward_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:id="@+id/tableRow">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Cel"
+			android:id="@+id/label_target"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_target"
+			android:layout_column="5"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:text="km"
+			android:id="@+id/label_target_unit"
+			android:layout_column="6"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="50dp"
+			android:layout_column="2"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Start"
+			android:id="@+id/btn_start"
+			android:layout_column="2"
+			android:layout_span="5"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="2"/>
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Stop"
+			android:id="@+id/btn_stop"
+			android:layout_column="2"
+			android:visibility="gone"/>
+	</TableRow>
+
+</TableLayout>

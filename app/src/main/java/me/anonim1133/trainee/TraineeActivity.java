@@ -42,6 +42,14 @@ public class TraineeActivity extends Activity {
 				.commit();
 	}
 
+	public void selectRunning(View view){
+		fragment = new Running();
+		getFragmentManager().beginTransaction()
+				.replace(R.id.container, fragment)
+				.addToBackStack(null)
+				.commit();
+	}
+
 	public void selectWalking(View view){
 		fragment = new Walking();
 		getFragmentManager().beginTransaction()

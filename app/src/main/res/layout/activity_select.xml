@@ -23,8 +23,23 @@
 	<Button
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Walking/Running"
-		android:id="@+id/btn_walking"
+		android:text="Running"
+		android:id="@+id/btn_running"
+		android:layout_gravity="center_horizontal"
+		android:onClick="selectRunning"/>
+
+	<Space
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_horizontal"
+		android:layout_weight="0.06"
+		android:id="@+id/space3"/>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Walking"
+		android:id="@+id/button"
 		android:layout_gravity="center_horizontal"
 		android:onClick="selectWalking"/>
 
