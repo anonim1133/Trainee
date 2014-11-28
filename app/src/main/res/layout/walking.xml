@@ -91,6 +91,38 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="Kroki"
+			android:id="@+id/label_steps"
+			android:layout_column="2"/>
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="3"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:text="0"
+			android:id="@+id/txt_steps"
+			android:layout_column="5"/>
+
+	</TableRow>
+
+	<TableRow
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+
+		<Space
+			android:layout_width="20px"
+			android:layout_height="20px"
+			android:layout_column="1"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="Prędkość max"
 			android:id="@+id/label_speed_max"
 			android:layout_column="2"/>
@@ -572,7 +604,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="Cel"
-			android:id="@+id/label_target"
+			android:id="@+id/label_goal"
 			android:layout_column="2"/>
 
 		<Space
@@ -585,7 +617,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="0"
-			android:id="@+id/txt_target"
+			android:id="@+id/txt_goal"
 			android:layout_column="5"/>
 
 		<TextView
@@ -593,7 +625,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km"
-			android:id="@+id/label_target_unit"
+			android:id="@+id/label_goal_unit"
 			android:layout_column="6"/>
 	</TableRow>
 

@@ -1,12 +1,12 @@
 package me.anonim1133.trainee.utils;
 
-public class AverageSpeed {
+public class Average {
 
 	private short count = 0;
 	private short limit = 0;
 	private float sum = 0;
 
-	public AverageSpeed(short limit) {
+	public Average(short limit) {
 		this.limit = limit;
 	}
 

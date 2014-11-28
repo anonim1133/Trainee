@@ -22,7 +22,7 @@ import me.anonim1133.trainee.db.DataBaseHelper;
 import me.anonim1133.trainee.fragments.Biking;
 import me.anonim1133.trainee.fragments.Running;
 import me.anonim1133.trainee.fragments.Walking;
-import me.anonim1133.trainee.utils.AverageSpeed;
+import me.anonim1133.trainee.utils.Average;
 import me.anonim1133.trainee.utils.GpxBuilder;
 
 
@@ -41,6 +41,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
 	public long FAST_INTERVAL_CEILING_IN_MILLISECONDS =
 			MILLISECONDS_PER_SECOND * FAST_CEILING_IN_SECONDS;
+	private boolean is_counting_steps = false;
 
 	private LocationClient locationClient;
 	private LocationRequest locationRequest;
@@ -52,8 +53,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private Running running;
 	private Walking walking;
 
-	private AverageSpeed avg_speed;
-	private AverageSpeed avg_tempo;
+	private Average avg_speed;
+	private Average avg_tempo;
 
 	private Location last_location;
 	private float total_distance = 0;
@@ -63,6 +64,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 	private float altitude_max = -1000;
 	private float upward = 0;
 	private float downward = 0;
+	private int step_count = 0;
 
 	private boolean updates_requested = false;
 
@@ -99,6 +101,14 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		if(walking != null)
 			walking.setActive(active);
+	}
+
+	public void setStepCounting(boolean bool){
+		is_counting_steps = bool;
+	}
+
+	public void setStepCount(int steps){
+		step_count = steps;
 	}
 
 	public void setSpeed(float speed){
@@ -264,7 +274,10 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		}
 
 		//Saving point to gpx
-		gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f,	location.getTime());
+		if(!is_counting_steps)
+			gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f,	location.getTime());
+		else
+			gpx.addPoint(location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed()*3.6f, step_count,	location.getTime());
 
 		last_location = location;
 	}
@@ -304,6 +317,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			gpx = new GpxBuilder(c, "Biking", "Unknown");
 		else if(running != null)
 			gpx = new GpxBuilder(c, "Running", "Unknown");
+		else if(walking != null)
+			gpx = new GpxBuilder(c, "Walking", "Unknown");
 		else gpx = new GpxBuilder(c, "Unknown", "Unknown");
 
 		try {
@@ -317,8 +332,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 		Log.d(APPTAG, "startPeriodicUpdates");
 		locationClient.requestLocationUpdates(locationRequest, this);
 
-		avg_speed = new AverageSpeed(AVERAGE_SAMPLE_COUNT);
-		avg_tempo = new AverageSpeed(AVERAGE_SAMPLE_COUNT);
+		avg_speed = new Average(AVERAGE_SAMPLE_COUNT);
+		avg_tempo = new Average(AVERAGE_SAMPLE_COUNT);
 	}
 
 	public void stopPeriodicUpdates() {
@@ -330,6 +345,8 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 			db.addTraining(filename, "Biking", biking.getTimeMs(), biking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
 		}else if(running != null){
 			db.addTraining(filename, "Running" , running.getTimeMs(), running.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+		}else if(walking != null){
+			db.addTraining(filename, "Running" , walking.getTimeMs(), walking.getTimeActiveMs(), speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
 		}
 
 

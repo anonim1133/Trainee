@@ -65,6 +65,21 @@ public class GpxBuilder {
 		}
 	}
 
+	public void addPoint(double lat, double lon, double ele, float speed, int steps, long time){
+		String string = "<trkpt lat=\"" + String.valueOf(lat) + "\" lon=\"" + String.valueOf(lon) + "\">\n" +
+				"\t\t<ele>" + String.valueOf(ele) + "</ele>\n" +
+				"\t\t<time>" + String.valueOf(time) + "</time>\n" +
+				"\t\t<speed>" + String.valueOf(speed) + "</speed>\n" +
+				"\t\t<steps>" + String.valueOf(speed) + "</steps>\n" +
+				"\t\t</trkpt>\n";
+
+		try {
+			outputStream.write(string.getBytes());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public String close() {
 		write("     </trkseg>\n" +
 				"   </trk>\n" +

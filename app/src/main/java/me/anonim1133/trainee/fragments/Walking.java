@@ -12,22 +12,26 @@ import android.widget.TextView;
 
 import me.anonim1133.trainee.R;
 import me.anonim1133.trainee.sensors.GpsHelper;
+import me.anonim1133.trainee.sensors.PedometerHelper;
 
 public class Walking extends Fragment{
 
 	View rootView;
 	GpsHelper gps;
+	PedometerHelper pedo;
 
 	Chronometer chrono;
 
 	boolean active = false;
 	int active_time = 0;
+	int steps = 0;
 
 	@Override
 	public void onAttach(Activity activity){
 		super.onAttach(activity);
 
 		gps = new GpsHelper(activity, this, 1, 16);
+		pedo = new PedometerHelper(activity, 11.91);
 	}
 
 	@Override
@@ -59,6 +63,9 @@ public class Walking extends Fragment{
 						active_time++;
 
 					setTimeActive(getTimeActive());
+
+					steps = pedo.getStepCount();
+					setSteps();
 				}
 			}
 		});
@@ -69,11 +76,13 @@ public class Walking extends Fragment{
 	@Override
 	public void onStart() {
 		super.onStart();
-
 	}
 
 	public void onBtnStart() {
 		gps.requestUpdates();
+		gps.setStepCounting(true);
+
+		pedo.registerSensor();
 
 		chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
 		chrono.setBase(SystemClock.elapsedRealtime());
@@ -84,8 +93,13 @@ public class Walking extends Fragment{
 	}
 
 	public void onBtnStop() {
-		if (gps != null)
+		if (gps != null) {
 			gps.stopPeriodicUpdates();
+			gps.setStepCounting(false);
+		}
+
+		if(pedo != null)
+			pedo.unregisterSensor();
 
 		chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
 		chrono.stop();
@@ -123,9 +137,16 @@ public class Walking extends Fragment{
 		this.active = active;
 	}
 
+
+	/* UI values setting */
 	public void setTimeActive(String time_active) {
 		TextView tv = (TextView) rootView.findViewById(R.id.txt_time_active);
 		tv.setText(time_active);
+	}
+
+	public void setSteps() {
+		TextView tv = (TextView) rootView.findViewById(R.id.txt_steps);
+		tv.setText(String.valueOf(steps));
 	}
 
 	public void setSpeed(String speed) {

@@ -572,7 +572,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="Cel"
-			android:id="@+id/label_target"
+			android:id="@+id/label_goal"
 			android:layout_column="2"/>
 
 		<Space
@@ -585,7 +585,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:text="0"
-			android:id="@+id/txt_target"
+			android:id="@+id/txt_goal"
 			android:layout_column="5"/>
 
 		<TextView
@@ -593,7 +593,7 @@
 			android:layout_height="wrap_content"
 			android:textAppearance="?android:attr/textAppearanceSmall"
 			android:text="km"
-			android:id="@+id/label_target_unit"
+			android:id="@+id/label_target_goal"
 			android:layout_column="6"/>
 	</TableRow>
 
