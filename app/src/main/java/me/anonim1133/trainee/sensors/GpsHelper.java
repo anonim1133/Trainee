@@ -1,4 +1,4 @@
-package me.anonim1133.trainee;
+package me.anonim1133.trainee.sensors;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -17,6 +17,13 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
 import java.sql.SQLException;
+
+import me.anonim1133.trainee.db.DataBaseHelper;
+import me.anonim1133.trainee.fragments.Biking;
+import me.anonim1133.trainee.fragments.Running;
+import me.anonim1133.trainee.fragments.Walking;
+import me.anonim1133.trainee.utils.AverageSpeed;
+import me.anonim1133.trainee.utils.GpxBuilder;
 
 
 public class GpsHelper extends Activity implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {

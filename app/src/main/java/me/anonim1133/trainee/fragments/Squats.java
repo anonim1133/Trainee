@@ -1,4 +1,4 @@
-package me.anonim1133.trainee;
+package me.anonim1133.trainee.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Jumping extends Fragment {
+import me.anonim1133.trainee.R;
 
-	public Jumping() {
+public class Squats extends Fragment {
+
+	public Squats() {
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.jumping, container, false);
+		View rootView = inflater.inflate(R.layout.squats, container, false);
 		return rootView;
 	}
 }

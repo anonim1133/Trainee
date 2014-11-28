@@ -1,4 +1,4 @@
-package me.anonim1133.trainee;
+package me.anonim1133.trainee.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
-public class Walking extends Fragment{
+import me.anonim1133.trainee.R;
+import me.anonim1133.trainee.sensors.GpsHelper;
+
+public class Running extends Fragment{
 
 	View rootView;
 	GpsHelper gps;
@@ -24,12 +27,12 @@ public class Walking extends Fragment{
 	public void onAttach(Activity activity){
 		super.onAttach(activity);
 
-		gps = new GpsHelper(activity, this, 1, 16);
+		gps = new GpsHelper(activity, this, 1, 7);
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		this.rootView = inflater.inflate(R.layout.walking, container, false);
+		this.rootView = inflater.inflate(R.layout.running, container, false);
 
 		rootView.findViewById(R.id.btn_start).setOnClickListener(new View.OnClickListener()
 		{

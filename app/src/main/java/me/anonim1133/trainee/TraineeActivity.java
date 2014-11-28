@@ -7,6 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import me.anonim1133.trainee.fragments.Biking;
+import me.anonim1133.trainee.fragments.Jumping;
+import me.anonim1133.trainee.fragments.Running;
+import me.anonim1133.trainee.fragments.SelectActivity;
+import me.anonim1133.trainee.fragments.Squats;
+import me.anonim1133.trainee.fragments.Walking;
 
 
 public class TraineeActivity extends Activity {

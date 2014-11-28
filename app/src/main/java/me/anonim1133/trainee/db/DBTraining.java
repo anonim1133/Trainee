@@ -1,4 +1,4 @@
-package me.anonim1133.trainee;
+package me.anonim1133.trainee.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
