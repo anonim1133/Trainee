@@ -321,7 +321,7 @@ public class GpsHelper extends Activity implements LocationListener, GooglePlayS
 
 		String filename = gpx.close();
 
-		db.addTraining(filename, user_name, time, time_active, speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
+		db.addTraining(filename, activity_name, time, time_active, speed_max, avg_speed.get(), tempo_min, avg_tempo.get(), total_distance, (int)altitude_min, (int)altitude_max, (int)upward, (int)downward);
 
 
 
