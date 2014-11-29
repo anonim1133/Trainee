@@ -124,7 +124,7 @@ public class Squats extends Fragment {
 			String time = today.format2445();
 
 			float tempo = ((getTimeMs()/60)/60)/moves;
-			db.addTraining(time, "Jumping", getTimeMs(), 0, moves, 0, 0, 0, tempo, succession, 0, 0, 0, 0);
+			db.addTraining(time, "Squats", getTimeMs(), 0, moves, 0, 0, 0, tempo, succession, 0, 0, 0, 0);
 		}
 	}
 
