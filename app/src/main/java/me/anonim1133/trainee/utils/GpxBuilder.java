@@ -31,7 +31,9 @@ public class GpxBuilder {
 		}
 
 		write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-				"<gpx version=\"1.1\" creator=\"" + CREATOR + "\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd\" xmlns=\"http://www.topografix.com/GPX/1/1\" xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v1\" xmlns:gpxx=\"http://www.garmin.com/xmlschemas/GpxExtensions/v3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+				"<gpx version=\"1.1\" creator=\"" + CREATOR + "\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n" +
+				"xmlns=\"http://www.topografix.com/GPX/1/0\" \n" +
+				"xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">\n" +
 				"   <metadata>\n" +
 				"       <author>\n" +
 				"           <name>" + author + "</name>\n" +
@@ -52,9 +54,14 @@ public class GpxBuilder {
 	}
 
 	public void addPoint(double lat, double lon, double ele, float speed, long time){
+
+		Time today = new Time();
+		today.set(time);
+		String time2445 = today.format2445();
+
 		String string = "<trkpt lat=\"" + String.valueOf(lat) + "\" lon=\"" + String.valueOf(lon) + "\">\n" +
 				"\t\t<ele>" + String.valueOf(ele) + "</ele>\n" +
-				"\t\t<time>" + String.valueOf(time) + "</time>\n" +
+				"\t\t<time>" + time2445 + "</time>\n" +
 				"\t\t<speed>" + String.valueOf(speed) + "</speed>\n" +
 				"\t\t</trkpt>\n";
 
