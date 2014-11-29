@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import java.sql.SQLException;
+
 import me.anonim1133.trainee.R;
+import me.anonim1133.trainee.db.DataBaseHelper;
 import me.anonim1133.trainee.sensors.AccelerometerHelper;
 
 public class Jumping extends Fragment {
@@ -18,6 +22,7 @@ public class Jumping extends Fragment {
 	Chronometer chrono;
 
 	AccelerometerHelper accelerometer;
+	DataBaseHelper db;
 
 	boolean active = false;
 	int moves = 0;
@@ -101,6 +106,24 @@ public class Jumping extends Fragment {
 		rootView.findViewById(R.id.btn_start).setVisibility(View.VISIBLE);
 		rootView.findViewById(R.id.btn_next).setVisibility(View.GONE);
 		rootView.findViewById(R.id.btn_stop).setVisibility(View.GONE);
+
+		if(db == null){
+			try {
+				db = new DataBaseHelper(getActivity());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if(db != null){
+			Time today = new Time();
+			today.setToNow();
+
+			String time = today.format2445();
+
+			float tempo = ((getTimeMs()/60)/60)/moves;
+			db.addTraining(time, "Jumping", getTimeMs(), 0, moves, 0, 0, 0, tempo, succession, 0, 0, 0, 0);
+		}
 	}
 
 	public void onBtnNext() {
