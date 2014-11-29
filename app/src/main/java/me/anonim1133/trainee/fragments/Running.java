@@ -50,6 +50,7 @@ public class Running extends Fragment{
 			}
 		});
 
+		chrono = (Chronometer) rootView.findViewById(R.id.chronometer);
 		chrono.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
 			@Override
 			public void onChronometerTick(Chronometer chronometer) {
