@@ -121,8 +121,10 @@ public class Jumping extends Fragment {
 
 			String time = today.format2445();
 
-			float tempo = ((getTimeMs()/60)/60)/moves;
-			db.addTraining(time, "Jumping", getTimeMs(), 0, moves, 0, 0, 0, tempo, succession, 0, 0, 0, 0);
+			if(moves > 0) {
+				float tempo = ((getTimeMs() / 60) / 60) / moves;
+				db.addTraining(time, "Jumping", getTimeMs(), 0, moves, 0, 0, 0, tempo, succession, 0, 0, 0, 0);
+			}
 		}
 	}
 
